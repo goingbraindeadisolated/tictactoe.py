@@ -5,6 +5,10 @@ from Classes import Game, Field
 # ====== Field settings ====== #
 Width = 7
 Height = 7
+BorderChars = {
+    "X": "X",
+    "Y": "|"
+}
 Layout = """
 +----+----+----+
 |     |     |     |
@@ -19,12 +23,12 @@ Layout = """
 
 def main():
     game = Game()
-    mainfield = Field(15, 15, 1, 1)
-    # gamefield = Field(Width, Height, 3, 3)                       # Создаем игровое поле                    # Игровой цикл
-    mainfield.window.box('#', "#")
+    mainfield = Field(10, 50, 0, 0)
+    mainfield.border(BorderChars['Y'], BorderChars['X'])
+    gamefield = Field(Width, Height, 3, 3)
 
-    screen. refresh()
-    screen.getch()
+    mainfield.window.refresh()
+    mainfield.window.getch()
 
 
 screen = curses.initscr()

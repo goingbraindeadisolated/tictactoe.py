@@ -29,13 +29,15 @@ class Game:
         Game.win = True
 
 class Field:
+    #TODO: сделать передачу дополнительно экрана на котором будет создаваться поле
 
-    def __init__(self, width, height, x, y):
+    def __init__(self, screen, width, height, x, y):
         self.width = width
         self.height = height
         self.x = x
         self.y = y
+        self.screen = screen
         self.window = curses.newwin(self.width, self.height, self.y, self.x)
 
-    def border(self, symbol):
-        self.window.box(symbol, symbol)
+    def border(self, symbol1, symbol2):
+        self.window.box(symbol1, symbol2)

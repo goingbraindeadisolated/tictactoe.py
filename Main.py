@@ -1,39 +1,26 @@
 import curses
-from Classes import Game, Field
-
-
-# ====== Field settings ====== #
-Width = 7
-Height = 7
-BorderChars = {
-    "X": "X",
-    "Y": "|"
-}
-Layout = """
-+----+----+----+
-|     |     |     |
-+----+----+----+
-|     |     |     |
-+----+----+----+
-|     |     |     |
-+----+----+----+
-"""
-# ======================== #
+from Classes import Game, Gamefield, _Round
 
 
 def main():
-    game = Game()
-    mainfield = Field(10, 50, 0, 0)
-    mainfield.border(BorderChars['Y'], BorderChars['X'])
-    gamefield = Field(Width, Height, 3, 3)
 
-    mainfield.window.refresh()
-    mainfield.window.getch()
+    game = Game()
+    while not game.won:
+        _round = _Round()
+        gamefield = Gamefield(3, 3, 2, 1)
+        while not _round.won:
+            event = game.window.getch()
+            if event == curses.KEY_MOUSE:
+                _, mouse_x, mouse_y, _, _ = curses.getmouse()
+                for i in gamefield.cells:
+                    if mouse_x > gamefield.cells[i].x and mouse_x > (gamefield.cells[i].x + 4) \
+                            and mouse_y > (gamefield.cells[i].y + 4) and mouse_y > (gamefield.cells[i].y + 2):
+                        gamefield.cells[i].storage = _round.change_char()
+
+    game.window.getch()
 
 
 screen = curses.initscr()
-curses.noecho()
 curses.cbreak()
-screen.keypad(0)
 screen.clear()
 main()

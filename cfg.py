@@ -9,4 +9,6 @@ CellBorderChars = {
     "corners": "+"
 }
 EndRoundNumber = 3
+Nought = "O"
+Cross = "X"
 # ======================== #

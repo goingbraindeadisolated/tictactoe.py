@@ -1,14 +1,3 @@
-# ====== Field settings ====== #
-ScreenBorderChars = {
-    "X": "-",
-    "Y": "|"
-}
-CellBorderChars = {
-    "X": "-",
-    "Y": "|",
-    "corners": "+"
-}
-EndRoundNumber = 3
-Nought = "O"
-Cross = "X"
+# ======== config ======== #
+PLAYER_SCORE_TARGET = 3    # Количество раундов необходимое игроку для победы во всей игре
 # ======================== #

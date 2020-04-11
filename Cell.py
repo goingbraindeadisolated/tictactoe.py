@@ -1,7 +1,7 @@
 import curses
 
 '''
-Нужен для отрисовки клеток поля. Размеры клетки: 3х5
+Класс, отвечающий за отрисовку клеток поля. Размеры клетки: 3х5. Клетка - окно с отрисованными рамками. 
 '''
 
 
@@ -18,7 +18,7 @@ class Cell:
         self.x = x+window_x0
         self.y = y+window_y0
         self.window = curses.newwin(3, 5, self.y, self.x)
-        self.storage = None
+        self.storage = " "
 
     def print(self):
         self.window.border(self.CellBorderChars["Y"], self.CellBorderChars["Y"], self.CellBorderChars["X"],
@@ -33,13 +33,14 @@ class Cell:
         self.storage = char
 
     def is_filled(self):
-        if self.storage is not None:
+        if self.storage is not " ":
             return True
         else:
             return False
 
     def clear(self):
-        self.window.delch(1, 2)
+        self.window.addch(1, 2, " ")
+        self.storage = " "
         self.window.refresh()
 
     def get_min_xy(self):

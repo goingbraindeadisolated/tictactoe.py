@@ -1,4 +1,3 @@
-import curses
 from Game import Game
 from Round import _Round
 from Board import Board
@@ -13,10 +12,11 @@ game.start()
 while not game.victory_validation():
     _round = _Round(game)
     _round.start()
-    while not _round.victory_validation():
+    while _round.ended is False:
         cell = board.click_monitor()
         board.change_cell_storage(_round.get_current_char(), cell)
-        _round.change_char()
+        _round.victory_validation()
+        _round.next_move()
 
     _round.end()
 game.end()

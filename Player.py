@@ -4,7 +4,7 @@ class Player:
         self.score = 0
         self.char = char
 
-    def change_score(self):
+    def increase_score(self):
         self.score += 1
 
     def get_char(self):

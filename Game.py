@@ -7,27 +7,18 @@ class Game:
 
     def __init__(self, board):
         self.board = board
-        self.player1 = None
-        self.player2 = None
+        self.player1 = Player("X", "X")
+        self.player2 = Player("O", "O")
         self.round_counter = 0      # Счетчик раундов
         self.winner = None     # Player
 
-    def end(self):
+    def end_msg(self):
         msg = self.winner.name + " Победил!"
         self.board.clear_inside()
         self.board.window.addstr(self.board.height // 2, self.board.width // 2 - len(msg) // 2, msg)
         self.board.refresh_window()
         curses.napms(1000)
         self.board.window.erase()
-
-    def start(self):
-        curses.curs_set(0)
-        curses.mousemask(1)
-        self.board.draw_edge()
-        self.player1 = Player("X", "X")             # Можно сделать ники для каждого игрока,
-        self.board.clear_inside()                   # но мне кажется так сложнее понимать кто ходит и т.д.
-        self.player2 = Player("O", "O")             # Я вообще изначально так и хотел, но потом передумал
-        self.board.clear_inside()
 
     def victory_validation(self):
         """

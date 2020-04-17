@@ -2,6 +2,7 @@ import curses
 from Grid import Grid
 import cfg
 
+
 class _Round:
 
     def __init__(self, game):
@@ -13,10 +14,6 @@ class _Round:
         self.start_player, self.next_player = self.set_player_move_sequence()
 
     def set_player_move_sequence(self):
-        """
-        Вызывается в начале каждого раунда
-        и устанавливает последовательность ходов в зависимости от количества сыгранных раундов.
-        """
 
         if self.game.round_counter % 2 == 0:
             start_player = self.game.player1
@@ -45,11 +42,11 @@ class _Round:
         self.game.board.window.refresh()
 
     def end_validation(self):
-        board = self.grid.cells         # TODO: Нихуя не работает, хоть и отслеживает
+        board = self.grid.cells
         # Проверка по горизонтали
         for _ in range(cfg.GRID_SCALE):
             self.ended = all(board[_][__].is_filled() is True for __ in range(cfg.GRID_SCALE)) and\
-                         any(board[_][__] == board[_][0] for __ in range(cfg.GRID_SCALE))
+                         all(board[_][__].storage == board[_][0].storage for __ in range(cfg.GRID_SCALE))
             if self.ended:
                 self.current_player.increase_score()
                 self.win_msg(self.current_player)
@@ -57,21 +54,21 @@ class _Round:
         # Проверка по вертикали
         for _ in range(cfg.GRID_SCALE):
             self.ended = all(board[__][_].is_filled() is True for __ in range(cfg.GRID_SCALE)) and\
-                         any(board[__][_] == board[0][_] for __ in range(cfg.GRID_SCALE))
+                         all(board[__][_].storage == board[0][_].storage for __ in range(cfg.GRID_SCALE))
             if self.ended:
                 self.current_player.increase_score()
                 self.win_msg(self.current_player)
                 return
         # Проверка по диагонали от левого верхнего угла
         self.ended = all(board[_][_].is_filled() is True for _ in range(cfg.GRID_SCALE)) and\
-                     all(board[_][_] == board[0][0] for _ in range(cfg.GRID_SCALE))
+                     all(board[_][_].storage == board[0][0].storage for _ in range(cfg.GRID_SCALE))
         if self.ended:
             self.current_player.increase_score()
             self.win_msg(self.current_player)
             return
         # Проверка по диагонали от правого верхнего угла
         self.ended = all(board[_][-1 - _].is_filled() is True for _ in range(cfg.GRID_SCALE)) and\
-                     all(board[_][-1 - _] == board[0][-1] for _ in range(cfg.GRID_SCALE))
+                     all(board[_][-1 - _].storage == board[0][-1].storage for _ in range(cfg.GRID_SCALE))
         if self.ended:
             self.current_player.increase_score()
             self.win_msg(self.current_player)

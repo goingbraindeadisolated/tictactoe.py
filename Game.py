@@ -14,16 +14,14 @@ class Game:
 
     def end_msg(self):
         msg = self.winner.name + " Победил!"
-        self.board.clear_inside()
+        self.board.clear()
         self.board.window.addstr(self.board.height // 2, self.board.width // 2 - len(msg) // 2, msg)
-        self.board.refresh_window()
+        self.board.window.refresh()
         curses.napms(1000)
-        self.board.window.erase()
+        self.board.clear()
 
     def victory_validation(self):
-        """
-        Тут понятно, я думаю. Если счет какого-то игрока равен определенному в конфиге кол-ву, то игра заканчивается
-        """
+
         if self.player1.score == cfg.PLAYER_SCORE_TARGET:
 
             self.winner = self.player1
